@@ -19,9 +19,9 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
   String baseUrl =
-      ref.watch(preferencesProvider.select((prefs) => prefs.baseUrl));
+  ref.watch(preferencesProvider.select((prefs) => prefs.baseUrl));
   String userToken =
-      ref.watch(preferencesProvider.select((prefs) => prefs.userToken));
+  ref.watch(preferencesProvider.select((prefs) => prefs.userToken));
 
   return AudiobookshelfApi(
     baseUrl: baseUrl,
@@ -78,17 +78,17 @@ class AbsRepository extends MediaRepository {
           ? totalDuration
           : AbsUtils.parseDurationFromSeconds(book.media.duration),
       artUri:
-          // _coverUrl(_api.baseUrl, book.book?.cover,
-          //     book.lastUpdate?.millisecondsSinceEpoch),
-          _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt),
+      // _coverUrl(_api.baseUrl, book.book?.cover,
+      //     book.lastUpdate?.millisecondsSinceEpoch),
+      _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt),
       playable: true,
       extras: <String, dynamic>{
         'played': played,
         'narrator': book.media.metadata.narrators?.join(', ') ?? 'Unknown',
         'viewOffset': viewOffset,
         'largeThumbnail':
-            _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
-                .toString(),
+        _scaledCoverUrl(_api.baseUrl, book.id, book.updatedAt, 600)
+            .toString(),
         if (book.media.chapters != null)
           'chapters': [
             for (final chapter in book.media.chapters!) chapter.toJson()
@@ -109,16 +109,16 @@ class AbsRepository extends MediaRepository {
     return (await _api.getAuthors(_db.getPreferencesSync().libraryId))
         .map(
           (author) => MediaItem(
-            id: '@authors/${author.id}',
-            title: author.name,
-            artUri: author.imagePath == null
-                ? null
-                : Uri.parse(
-                    '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
-            playable: false,
-            displayDescription: author.description,
-          ),
-        )
+        id: '@authors/${author.id}',
+        title: author.name,
+        artUri: author.imagePath == null
+            ? null
+            : Uri.parse(
+            '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
+        playable: false,
+        displayDescription: author.description,
+      ),
+    )
         .toList()
       ..sort((a, b) => a.title.compareTo(b.title));
   }
@@ -127,10 +127,10 @@ class AbsRepository extends MediaRepository {
   Future<List<MediaItem>> getBooksFromAuthor(String authorId) async {
     return [
       for (final book
-          in (await _api.getBooksForAuthor(
-                  _db.getPreferencesSync().libraryId, authorId))
-              .toList()
-            ..sort(_sortBooks))
+      in (await _api.getBooksForAuthor(
+          _db.getPreferencesSync().libraryId, authorId))
+          .toList()
+        ..sort(_sortBooks))
         _bookToItem(book)
     ];
   }
@@ -199,51 +199,91 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future<List<MediaItem>> getBooksFromSeries(String seriesId) async {
-    if (audiobooks.isEmpty) {
-      await getAllBooks();
-    }
+    final books = await _api.getBooksForSeries(_libraryId, seriesId);
     return [
-      for (final book in audiobooks.values
+      for (final book in books
           .where((book) =>
-              book.media.metadata.series?.any((series) => series.id == seriesId) ??
-              false)
+      book.media.metadata.series
+          ?.any((series) => series.id == seriesId) ??
+          false)
           .toList()
         ..sort((a, b) => double.parse(a.media.metadata.series
-                    ?.firstWhere((series) => series.id == seriesId)
-                    .sequence ??
-                '0')
+            ?.firstWhere((series) => series.id == seriesId)
+            .sequence ??
+            '0')
             .compareTo(double.parse(b.media.metadata.series
-                    ?.firstWhere((series) => series.id == seriesId)
-                    .sequence ??
-                '0'))))
+            ?.firstWhere((series) => series.id == seriesId)
+            .sequence ??
+            '0'))))
         _bookToItem(book)
     ];
   }
 
+  // @override
+  // Future<List<MediaItem>> getBooksFromSeries(String seriesId) async {
+  //   if (audiobooks.isEmpty) {
+  //     await getAllBooks();
+  //   }
+  //   return [
+  //     for (final book in audiobooks.values
+  //         .where((book) =>
+  //             book.media.metadata.series?.any((series) => series.id == seriesId) ??
+  //             false)
+  //         .toList()
+  //       ..sort((a, b) => double.parse(a.media.metadata.series
+  //                   ?.firstWhere((series) => series.id == seriesId)
+  //                   .sequence ??
+  //               '0')
+  //           .compareTo(double.parse(b.media.metadata.series
+  //                   ?.firstWhere((series) => series.id == seriesId)
+  //                   .sequence ??
+  //               '0'))))
+  //       _bookToItem(book)
+  //   ];
+  // }
+
   @override
   Future<List<MediaItem>> getSeries() async {
-    if (audiobooks.isEmpty) {
-      await getAllBooks();
-    }
-    return {
-      for (final series in audiobooks.values
-          .where((book) =>
-              book.media.metadata.series != null &&
-              book.media.metadata.series!.isNotEmpty)
-          .expand((book) => book.media.metadata.series!
-              .map((e) => _SeriesHolder(e.id, e.name, e.sequence ?? '', book)))
-          .toList())
+    final series = await _api.getSeries(_libraryId);
+
+    return [
+      for (final serie in series)
         MediaItem(
-          id: '@series/${series.id}',
-          title: series.name,
-          playable: false,
-          artUri: _scaledCoverUrl(
-              _api.baseUrl, series.book.id, series.book.updatedAt),
-        )
-    }.toList()
-      ..sort((a, b) =>
-          _removeArticles(a.title).compareTo(_removeArticles(b.title)));
+            id: '@series/${serie.id}',
+            title: serie.name,
+            playable: false,
+            artUri: _scaledCoverUrl(
+              _api.baseUrl,
+              serie.books[0].id,
+              serie.books[0].updatedAt,
+            ))
+    ];
   }
+
+  // @override
+  // Future<List<MediaItem>> getSeries() async {
+  //   if (audiobooks.isEmpty) {
+  //     await getAllBooks();
+  //   }
+  //   return {
+  //     for (final series in audiobooks.values
+  //         .where((book) =>
+  //             book.media.metadata.series != null &&
+  //             book.media.metadata.series!.isNotEmpty)
+  //         .expand((book) => book.media.metadata.series!
+  //             .map((e) => _SeriesHolder(e.id, e.name, e.sequence ?? '', book)))
+  //         .toList())
+  //       MediaItem(
+  //         id: '@series/${series.id}',
+  //         title: series.name,
+  //         playable: false,
+  //         artUri: _scaledCoverUrl(
+  //             _api.baseUrl, series.book.id, series.book.updatedAt),
+  //       )
+  //   }.toList()
+  //     ..sort((a, b) =>
+  //         _removeArticles(a.title).compareTo(_removeArticles(b.title)));
+  // }
 
   @override
   String getDownloadUrl(String path) {
@@ -270,7 +310,7 @@ class AbsRepository extends MediaRepository {
   @override
   Future<List<MediaItem>> getRecentlyAdded() async {
     final books =
-        await _api.getRecentlyAdded(_db.getPreferencesSync().libraryId);
+    await _api.getRecentlyAdded(_db.getPreferencesSync().libraryId);
     return books.map(_bookToItem).toList();
   }
 
@@ -280,14 +320,14 @@ class AbsRepository extends MediaRepository {
     userProgress = books;
     return [
       for (final book
-          in books.values
-              .where((book) =>
-                  !book.id.startsWith('local_') &&
-                  !book.isFinished &&
-                  (book.progress ?? 0) > 0 &&
-                  book.lastUpdate != null)
-              .toList()
-            ..sort((a, b) => b.lastUpdate!.compareTo(a.lastUpdate!)))
+      in books.values
+          .where((book) =>
+      !book.id.startsWith('local_') &&
+          !book.isFinished &&
+          (book.progress ?? 0) > 0 &&
+          book.lastUpdate != null)
+          .toList()
+        ..sort((a, b) => b.lastUpdate!.compareTo(a.lastUpdate!)))
         _bookToItem(await _api.getBookInfo(book.id))
     ];
   }
@@ -388,10 +428,10 @@ class AbsRepository extends MediaRepository {
       double playbackRate, AudiobookshelfEvent event, bool playing) async {
     final progress = userProgress.putIfAbsent(
         key,
-        () => AbsAudiobookProgress(
-              id: key,
-              isFinished: false,
-            ));
+            () => AbsAudiobookProgress(
+          id: key,
+          isFinished: false,
+        ));
     progress.progress = position.inMilliseconds / duration.inMilliseconds;
     progress.currentTime = position;
     progress.duration = duration;
@@ -433,11 +473,11 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future playbackStarted(
-    String key,
-    Duration position,
-    Duration duration,
-    double playbackRate,
-  ) async {
+      String key,
+      Duration position,
+      Duration duration,
+      double playbackRate,
+      ) async {
     // print('LOOKEE HERE: Starting session');
     _lastCheckinTime = DateTime.now();
     DeviceInfoService di = getIt();
@@ -476,10 +516,10 @@ class AbsRepository extends MediaRepository {
       AudiobookshelfPlaybackState state) async {
     final progress = userProgress.putIfAbsent(
         key,
-        () => AbsAudiobookProgress(
-              id: key,
-              isFinished: false,
-            ));
+            () => AbsAudiobookProgress(
+          id: key,
+          isFinished: false,
+        ));
     progress.progress = position / duration;
     progress.currentTime = Duration(milliseconds: position);
 
@@ -510,7 +550,7 @@ class AbsRepository extends MediaRepository {
           artUri: author.imagePath == null
               ? null
               : Uri.parse(
-                  '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
+              '${_api.baseUrl}/api/authors/${author.id}/image?token=${_api.token}&format=webp&width=400&ts=${author.updatedAt}'),
         ),
       for (final series in response.series)
         MediaItem(

@@ -6,6 +6,7 @@ export 'src/abs_user.dart';
 export 'src/abs_audiobook_progress.dart';
 export 'src/models/abs_audiobook.dart';
 export 'src/models/abs_play_item_request.dart';
+export 'src/models/abs_series.dart';
 export 'src/abs_audiobook_search_result.dart';
 export 'src/abs_library.dart';
 export 'src/abs_login_response.dart';

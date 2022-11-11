@@ -231,6 +231,45 @@ class AudiobookshelfApi {
     )).books;
   }
 
+  Future<List<AbsSeries>> getSeries(String libraryId) async {
+    http.Response response = await client.get(
+      createUri(baseUrl!, '/api/libraries/$libraryId/series'),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(
+      utf8.decode(response.bodyBytes),
+    )['results']
+        .map<AbsSeries>((x) => AbsSeries.fromJson(x))
+        .toList();
+  }
+
+  Future<List<AbsAudiobook>> getBooksForSeries(
+      String libraryId, String seriesId) async {
+    final encodedSeriesId = base64Encode(utf8.encode(seriesId));
+    http.Response response = await client.get(
+      createUri(
+        baseUrl!,
+        '/api/libraries/$libraryId/items',
+        {
+          'expanded': '1',
+          'filter': 'series.$encodedSeriesId',
+        },
+      ),
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer $token',
+      },
+    );
+
+    return jsonDecode(utf8.decode(response.bodyBytes))['results']
+        .map<AbsAudiobook>((el) => AbsAudiobook.fromJson(el))
+        .toList();
+  }
+
   Future<String> startPlaybackSession(
       String id, AbsPlayItemRequest playRequest) async {
     http.Response response = await client.post(

@@ -18,7 +18,13 @@ import 'package:path/path.dart' as p;
 enum DurationState { between, before, after }
 
 class AudiobookshelfAudioHandler extends BaseAudioHandler {
-  final _player = AudioPlayer();
+  final _player = AudioPlayer(
+    audioLoadConfiguration: AudioLoadConfiguration(
+      darwinLoadControl: DarwinLoadControl(
+        preferredForwardBufferDuration: const Duration(seconds: 30),
+      ),
+    ),
+  );
   final completer = Completer();
 
   AudiobookshelfAudioHandler() {
