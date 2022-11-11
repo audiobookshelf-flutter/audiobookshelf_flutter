@@ -1,0 +1,28 @@
+name: audiobookshelf
+version: 0.1.0
+summary: Audiobook player for Audiobookshelf
+description: Audiobook player for Audiobookshelf
+
+confinement: strict
+base: core18
+grade: stable
+
+slots:
+  dbus-audiobookshelf: # adjust accordingly to your app name
+    interface: dbus
+    bus: session
+    name: com.azothforgotten.audiobookshelf # adjust accordingly to your app name and
+    
+apps:
+  audiobookshelf:
+    command: audiobookshelf
+    extensions: [flutter-stable] # Where "master" defines which Flutter channel to use for the build
+    plugs:
+      - network
+    slots:
+      - dbus-audiobookshelf
+parts:
+  audiobookshelf:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart

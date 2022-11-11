@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Audiobookshelf
+Comment=Audiobook app for Audiobookshelf
+Exec=audiobookshelf
+Icon=${SNAP}/meta/gui/icon.png # replace name to your app name
+Terminal=false
+Type=Application
+Categories=Media;
