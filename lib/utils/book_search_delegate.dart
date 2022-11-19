@@ -1,5 +1,5 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookshelf/material_ui/features/books/books_view.dart';
+import 'package:audiobookshelf/material_ui/features/library/library_view.dart';
 import 'package:audiobookshelf/providers.dart';
 import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
@@ -74,7 +74,7 @@ class BookSearchDelegate extends SearchDelegate {
                           } else {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => BooksView(
+                                  builder: (context) => LibraryView(
                                         mediaId: item.id,
                                         title: item.title,
                                       )),

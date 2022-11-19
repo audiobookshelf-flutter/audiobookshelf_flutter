@@ -33,7 +33,7 @@ class Offline extends HookConsumerWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: const Text('Books'),
+      title: const Text('Library'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {

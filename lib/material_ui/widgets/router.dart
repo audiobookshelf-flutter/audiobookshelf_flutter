@@ -1,7 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
 import 'package:audiobookshelf/material_ui/features/book_details/book_details_view.dart';
-import 'package:audiobookshelf/material_ui/features/books/books_view.dart';
+import 'package:audiobookshelf/material_ui/features/library/library_view.dart';
 import 'package:audiobookshelf/material_ui/features/home/home_view.dart';
 import 'package:audiobookshelf/material_ui/features/authors/authors_view.dart';
 import 'package:audiobookshelf/material_ui/features/player/player_view.dart';
@@ -17,8 +17,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => HomeView());
       case Routes.Authors:
         return MaterialPageRoute(builder: (_) => AuthorsView());
-      case Routes.Books:
-        return MaterialPageRoute(builder: (_) => BooksView());
+      case Routes.Library:
+        return MaterialPageRoute(builder: (_) => LibraryView());
       case Routes.Collections:
         return MaterialPageRoute(builder: (_) => CollectionsView());
       case Routes.Series:
@@ -27,7 +27,7 @@ class Router {
         Map<String, dynamic>? args =
             settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-            builder: (_) => BooksView(
+            builder: (_) => LibraryView(
                   mediaId: args!['id'],
                   title: args['title'],
                 ));

@@ -17,10 +17,10 @@ class AbMaterialApp extends HookConsumerWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final routeMap = [
     Routes.Home,
-    Routes.Authors,
-    Routes.Books,
-    Routes.Collections,
+    Routes.Library,
     Routes.Series,
+    Routes.Collections,
+    Routes.Authors,
   ];
 
   AbMaterialApp({super.key});
@@ -115,26 +115,27 @@ class AbMaterialApp extends HookConsumerWidget {
                     );
                   }
                 },
-                destinations: [
-                  const Destination(
+                destinations: const [
+                  Destination(
                     title: 'Home',
                     icon: Icons.home,
                   ),
-                  const Destination(
-                    title: 'Authors',
-                    icon: Icons.person,
-                  ),
-                  const Destination(
-                    title: 'Books',
+                  Destination(
+                    title: 'Library',
                     icon: Icons.book,
                   ),
-                  const Destination(
+                  Destination(
+                    title: 'Series',
+                    icon: Icons.window,
+                  ),
+                  Destination(
                     title: 'Collections',
                     icon: Icons.collections_bookmark,
                   ),
-                  if (db.getPreferencesSync().serverType ==
-                      ServerType.audiobookshelf)
-                    const Destination(title: 'Series', icon: Icons.window),
+                  Destination(
+                    title: 'Authors',
+                    icon: Icons.people,
+                  ),
                 ]),
           );
         },

@@ -5,7 +5,7 @@ class Routes {
   static const String Author = '/author';
   static const String Collections = '/collections';
   static const String Collection = '/collection';
-  static const String Books = '/books';
+  static const String Library = '/library';
   static const String Book = '/book';
   static const String Player = '/player';
   static const String Series = '/series';

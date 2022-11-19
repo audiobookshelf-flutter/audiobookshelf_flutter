@@ -12,11 +12,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/material_ui/widgets/scaffold_without_footer.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 
-class BooksView extends HookConsumerWidget {
+class LibraryView extends HookConsumerWidget {
   final String? mediaId;
   final String? title;
 
-  const BooksView({super.key, this.mediaId, this.title});
+  const LibraryView({super.key, this.mediaId, this.title});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class BooksView extends HookConsumerWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text(title ?? 'Books'),
+      title: Text(title ?? 'Library'),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
