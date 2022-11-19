@@ -1,10 +1,10 @@
 import 'package:audiobookshelf/constants/app_constants.dart';
 import 'package:audiobookshelf/domain/auth/auth_notifier.dart';
+import 'package:audiobookshelf/material_ui/features/abs_login/abs_login.dart';
 import 'package:audiobookshelf/material_ui/features/offline/offline_view.dart';
 import 'package:audiobookshelf/services/database/database_service.dart';
 import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:audiobookshelf/material_ui/features/player/mini_player.dart';
-import 'package:audiobookshelf/material_ui/features/welcome_view/welcome_view.dart';
 import 'package:audiobookshelf/material_ui/widgets/adaptive_scaffold.dart';
 import 'package:audiobookshelf/material_ui/widgets/auth_widget.dart';
 import 'package:audiobookshelf/material_ui/widgets/router.dart' as r;
@@ -138,7 +138,7 @@ class AbMaterialApp extends HookConsumerWidget {
                 ]),
           );
         },
-        unauthorizedBuilder: (context) => const WelcomeView(),
+        unauthorizedBuilder: (context) => const AbsLogin(),
         errorBuilder: (context, error) => Scaffold(
           body: Consumer(
             builder: (context, ref, _) {
