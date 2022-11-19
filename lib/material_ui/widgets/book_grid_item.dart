@@ -1,5 +1,3 @@
-import 'package:audiobookshelf/material_ui/widgets/played_icon.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -123,16 +121,16 @@ class BookGridItem extends StatelessWidget {
                   ],
                 ),
               ),
-            if (progress > 0)
+            if (progress > 0 || played)
               Align(
                 alignment: Alignment.bottomLeft,
                 child: LinearProgressIndicator(
                   minHeight: 6.0,
-                  value: progress,
+                  value: played ? 1 : progress,
                   backgroundColor: Colors.transparent,
+                  color: played ? Colors.green : Colors.amber,
                 ),
               ),
-            if (played) const PlayedIcon(),
           ],
         ),
       ),

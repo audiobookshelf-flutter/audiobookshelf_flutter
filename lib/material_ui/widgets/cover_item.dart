@@ -1,4 +1,3 @@
-import 'package:audiobookshelf/material_ui/widgets/played_icon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -61,17 +60,16 @@ class CoverItem extends StatelessWidget {
                 Positioned(
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: progress! > 0
+                    child: (progress! > 0 || played)
                         ? LinearProgressIndicator(
                             minHeight: 6,
-                            value: progress,
-                            color: Colors.deepPurple,
+                            value: played ? 1 : progress,
+                            color: played ? Colors.green : Colors.amber,
                             backgroundColor: Colors.transparent,
                           )
                         : Container(),
                   ),
-                ),
-                if (played) const PlayedIcon(),
+                )
               ],
             ),
           ),
