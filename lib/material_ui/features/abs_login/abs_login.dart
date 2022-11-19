@@ -88,7 +88,7 @@ class AbsLogin extends HookConsumerWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
+                          backgroundColor: Colors.green,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
