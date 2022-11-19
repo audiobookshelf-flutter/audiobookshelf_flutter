@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/services/audio/default_audio_handler.dart';
-import 'package:audiobookshelf/services/audio/desktop_audio_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
 Future<AudioHandler> initAudioHandler() async {

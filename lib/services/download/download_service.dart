@@ -9,7 +9,6 @@ import 'package:audiobookshelf/services/download/downloader.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
 class DownloadRequest {
   final MediaItem book;

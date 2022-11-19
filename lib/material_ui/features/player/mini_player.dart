@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/services/audio/playback_controller.dart';
 import 'package:audiobookshelf/material_ui/features/player/player_view.dart';

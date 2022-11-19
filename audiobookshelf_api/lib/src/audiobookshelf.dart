@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:audiobookshelf_api/audiobookshelf_api.dart';
-import 'package:audiobookshelf_api/src/abs_search_response.dart';
 import 'package:audiobookshelf_api/src/models/abs_media_progress.dart';
-import 'package:audiobookshelf_api/src/models/abs_play_item_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 

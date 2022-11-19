@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
 import 'package:audiobookshelf/models/book.dart';
-import 'package:audiobookshelf/models/download_status.dart';
 import 'package:audiobookshelf/repositories/media/media_repository.dart';
 import 'package:audiobookshelf/domain/home/home_state.dart';
 import 'package:audiobookshelf/providers.dart';

@@ -1,6 +1,4 @@
 import 'package:audiobookshelf/domain/auth/auth_notifier.dart';
-import 'package:audiobookshelf/domain/auth/auth_state.dart';
-import 'package:audiobookshelf/material_ui/features/offline/offline_view.dart';
 import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

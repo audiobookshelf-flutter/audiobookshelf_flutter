@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:audiobookshelf/domain/home/home_notifier.dart';
 import 'package:audiobookshelf/material_ui/features/home/home_row.dart';
-import 'package:audiobookshelf/domain/home/home_state.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:audiobookshelf/ios_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookshelf/models/preferences.dart';
 import 'package:audiobookshelf/models/user.dart';
 import 'package:audiobookshelf/repositories/authentication/abs_auth_repository.dart';
@@ -9,7 +7,6 @@ import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:audiobookshelf/domain/auth/auth_state.dart';
 import 'package:audiobookshelf/material_ui/features/library_select/library_select_view.dart';
 import 'package:audiobookshelf/providers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -68,19 +65,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
         user = await userRepo.getUser(prefs.userToken);
         print(user);
         if (prefs.libraryId.isEmpty) {
-          if (Platform.isIOS || Platform.isMacOS) {
-            await navigationService.push(
-              CupertinoPageRoute(builder: (context) {
-                return const IosLibrarySelectView();
-              }),
-            );
-          } else {
-            await navigationService.push(
-              MaterialPageRoute(builder: (context) {
-                return const LibrarySelectView();
-              }),
-            );
-          }
+          await navigationService.push(
+            MaterialPageRoute(builder: (context) {
+              return const LibrarySelectView();
+            }),
+          );
         }
       } else {}
 

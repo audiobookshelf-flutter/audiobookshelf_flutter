@@ -1,7 +1,5 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/services/audio/playback_controller.dart';
-import 'package:audiobookshelf/providers.dart';
-import 'package:audiobookshelf/material_ui/widgets/rewind_button.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

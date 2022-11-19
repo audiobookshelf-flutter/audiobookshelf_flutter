@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:audiobookshelf/models/preferences.dart';
 import 'package:audiobookshelf/repositories/media/abs_repository.dart';
 import 'package:audiobookshelf/services/database/database_service.dart';
-import 'package:audiobookshelf/services/device_info/device_info_service.dart';
 import 'package:audiobookshelf/repositories/media/media_repository.dart';
 import 'package:audiobookshelf/services/download/download_service.dart';
 import 'package:get_it/get_it.dart';

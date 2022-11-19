@@ -3,7 +3,6 @@ import 'package:audiobookshelf/repositories/media/media_repository.dart';
 import 'package:audiobookshelf/domain/authors/authors_state.dart';
 import 'package:audiobookshelf/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:http/http.dart';
 
 final authorsStateProvider =
     StateNotifierProvider<AuthorsNotifier, AuthorsState>((ref) {

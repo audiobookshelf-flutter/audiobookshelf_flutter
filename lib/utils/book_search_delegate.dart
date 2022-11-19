@@ -1,6 +1,5 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/material_ui/features/books/books_view.dart';
-import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:audiobookshelf/providers.dart';
 import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';

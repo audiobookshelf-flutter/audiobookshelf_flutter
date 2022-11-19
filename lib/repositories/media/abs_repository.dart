@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:audiobookshelf/models/download_status.dart';
-import 'package:audiobookshelf/models/preferences.dart';
 import 'package:audiobookshelf/models/user.dart';
 import 'package:audiobookshelf/models/library.dart';
 import 'package:audio_service/audio_service.dart';
@@ -13,9 +11,7 @@ import 'package:audiobookshelf/services/device_info/device_info_service.dart'
 import 'package:audiobookshelf/singletons.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:audiobookshelf_api/audiobookshelf_api.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
   String baseUrl =
