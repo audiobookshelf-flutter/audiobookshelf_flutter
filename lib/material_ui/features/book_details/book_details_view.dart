@@ -134,7 +134,7 @@ class BookDetailsView extends HookConsumerWidget {
                         ),
                       if (item.played)
                         IconButton(
-                          color: Colors.deepPurple,
+                          color: Colors.green,
                           icon: const Icon(Icons.check),
                           onPressed: () async {
                             await bookDetails.markUnplayed();
