@@ -5,6 +5,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/material_ui/features/library/library_view.dart';
 import 'package:audiobookshelf/domain/series/series_notifier.dart';
 import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
+import 'package:audiobookshelf/material_ui/widgets/library_dropdown.dart';
 import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class SeriesView extends HookConsumerWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: const Text('Series'),
+      title: const LibraryDropdown(),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {

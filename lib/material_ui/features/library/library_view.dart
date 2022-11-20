@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:audiobookshelf/domain/library_select/library_select_notifier.dart';
 import 'package:audiobookshelf/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookshelf/domain/books/books_notifier.dart';
 import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
+import 'package:audiobookshelf/material_ui/widgets/library_dropdown.dart';
 import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
+import 'package:audiobookshelf/models/library.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -30,7 +33,7 @@ class LibraryView extends HookConsumerWidget {
       onRefresh: () {
         _refresher.currentState!.show();
       },
-      title: Text(title ?? 'Library'),
+      title: const LibraryDropdown(),
       body: RefreshIndicator(
         key: _refresher,
         onRefresh: () async {
