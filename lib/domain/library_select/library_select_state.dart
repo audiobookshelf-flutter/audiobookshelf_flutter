@@ -7,10 +7,14 @@ part 'library_select_state.freezed.dart';
 @freezed
 class LibrarySelectState with _$LibrarySelectState {
   const factory LibrarySelectState.initial() = LibrarySelectStateInitial;
+
   const factory LibrarySelectState.loaded({
     List<Library>? libraries,
+    Library? selectedLibrary,
   }) = LibrarySelectStateLoaded;
+
   const factory LibrarySelectState.loading() = LibrarySelectStateLoading;
+
   const factory LibrarySelectState.error([String? message]) =
       LibrarySelectStateErrorDetails;
 }

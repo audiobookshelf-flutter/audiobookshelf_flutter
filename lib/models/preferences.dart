@@ -10,7 +10,6 @@ class Preferences {
   double rewindInterval;
   double fastForwardInterval;
   String baseUrl;
-  ServerType serverType;
   bool useChapterProgressBar;
 
   Preferences({
@@ -23,7 +22,6 @@ class Preferences {
     this.rewindInterval = 15,
     this.fastForwardInterval = 30,
     this.baseUrl = '',
-    this.serverType = ServerType.unknown,
     this.useChapterProgressBar = false,
   });
 

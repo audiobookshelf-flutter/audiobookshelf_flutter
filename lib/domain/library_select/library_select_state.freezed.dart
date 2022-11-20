@@ -19,7 +19,9 @@ mixin _$LibrarySelectState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function(
+            List<Library>? libraries, Library? selectedLibrary)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) =>
@@ -27,7 +29,8 @@ mixin _$LibrarySelectState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) =>
@@ -35,7 +38,8 @@ mixin _$LibrarySelectState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -135,7 +139,9 @@ class _$LibrarySelectStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function(
+            List<Library>? libraries, Library? selectedLibrary)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -146,7 +152,8 @@ class _$LibrarySelectStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -157,7 +164,8 @@ class _$LibrarySelectStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -216,7 +224,7 @@ abstract class _$$LibrarySelectStateLoadedCopyWith<$Res> {
           $Res Function(_$LibrarySelectStateLoaded) then) =
       __$$LibrarySelectStateLoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Library>? libraries});
+  $Res call({List<Library>? libraries, Library? selectedLibrary});
 }
 
 /// @nodoc
@@ -231,12 +239,17 @@ class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? libraries = freezed,
+    Object? selectedLibrary = freezed,
   }) {
     return _then(_$LibrarySelectStateLoaded(
       libraries: freezed == libraries
           ? _value._libraries
           : libraries // ignore: cast_nullable_to_non_nullable
               as List<Library>?,
+      selectedLibrary: freezed == selectedLibrary
+          ? _value.selectedLibrary
+          : selectedLibrary // ignore: cast_nullable_to_non_nullable
+              as Library?,
     ));
   }
 }
@@ -246,7 +259,8 @@ class __$$LibrarySelectStateLoadedCopyWithImpl<$Res>
 class _$LibrarySelectStateLoaded
     with DiagnosticableTreeMixin
     implements LibrarySelectStateLoaded {
-  const _$LibrarySelectStateLoaded({final List<Library>? libraries})
+  const _$LibrarySelectStateLoaded(
+      {final List<Library>? libraries, this.selectedLibrary})
       : _libraries = libraries;
 
   final List<Library>? _libraries;
@@ -259,8 +273,11 @@ class _$LibrarySelectStateLoaded
   }
 
   @override
+  final Library? selectedLibrary;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LibrarySelectState.loaded(libraries: $libraries)';
+    return 'LibrarySelectState.loaded(libraries: $libraries, selectedLibrary: $selectedLibrary)';
   }
 
   @override
@@ -268,7 +285,8 @@ class _$LibrarySelectStateLoaded
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'LibrarySelectState.loaded'))
-      ..add(DiagnosticsProperty('libraries', libraries));
+      ..add(DiagnosticsProperty('libraries', libraries))
+      ..add(DiagnosticsProperty('selectedLibrary', selectedLibrary));
   }
 
   @override
@@ -277,12 +295,14 @@ class _$LibrarySelectStateLoaded
         (other.runtimeType == runtimeType &&
             other is _$LibrarySelectStateLoaded &&
             const DeepCollectionEquality()
-                .equals(other._libraries, _libraries));
+                .equals(other._libraries, _libraries) &&
+            (identical(other.selectedLibrary, selectedLibrary) ||
+                other.selectedLibrary == selectedLibrary));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_libraries));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_libraries), selectedLibrary);
 
   @JsonKey(ignore: true)
   @override
@@ -296,35 +316,39 @@ class _$LibrarySelectStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function(
+            List<Library>? libraries, Library? selectedLibrary)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return loaded(libraries);
+    return loaded(libraries, selectedLibrary);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
-    return loaded?.call(libraries);
+    return loaded?.call(libraries, selectedLibrary);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(libraries);
+      return loaded(libraries, selectedLibrary);
     }
     return orElse();
   }
@@ -368,10 +392,12 @@ class _$LibrarySelectStateLoaded
 }
 
 abstract class LibrarySelectStateLoaded implements LibrarySelectState {
-  const factory LibrarySelectStateLoaded({final List<Library>? libraries}) =
-      _$LibrarySelectStateLoaded;
+  const factory LibrarySelectStateLoaded(
+      {final List<Library>? libraries,
+      final Library? selectedLibrary}) = _$LibrarySelectStateLoaded;
 
   List<Library>? get libraries;
+  Library? get selectedLibrary;
   @JsonKey(ignore: true)
   _$$LibrarySelectStateLoadedCopyWith<_$LibrarySelectStateLoaded>
       get copyWith => throw _privateConstructorUsedError;
@@ -426,7 +452,9 @@ class _$LibrarySelectStateLoading
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function(
+            List<Library>? libraries, Library? selectedLibrary)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -437,7 +465,8 @@ class _$LibrarySelectStateLoading
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -448,7 +477,8 @@ class _$LibrarySelectStateLoading
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
@@ -580,7 +610,9 @@ class _$LibrarySelectStateErrorDetails
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Library>? libraries) loaded,
+    required TResult Function(
+            List<Library>? libraries, Library? selectedLibrary)
+        loaded,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
@@ -591,7 +623,8 @@ class _$LibrarySelectStateErrorDetails
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Library>? libraries)? loaded,
+    TResult? Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult? Function()? loading,
     TResult? Function(String? message)? error,
   }) {
@@ -602,7 +635,8 @@ class _$LibrarySelectStateErrorDetails
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Library>? libraries)? loaded,
+    TResult Function(List<Library>? libraries, Library? selectedLibrary)?
+        loaded,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),

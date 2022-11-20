@@ -1,4 +1,3 @@
-import 'package:audiobookshelf/models/preferences.dart';
 import 'package:audiobookshelf/models/user.dart';
 import 'package:audiobookshelf/repositories/media/abs_repository.dart';
 import 'package:audiobookshelf/repositories/authentication/authentication_repository.dart';
@@ -39,7 +38,6 @@ class AbsAuthRepository extends AuthenticationRepository {
         ..userId = ''
         ..serverId = ''
         ..libraryId = ''
-        ..serverType = ServerType.unknown,
     );
 
     return true;
@@ -57,7 +55,6 @@ class AbsAuthRepository extends AuthenticationRepository {
         ..userId = res.user.id
         ..baseUrl = baseUrl
         ..userToken = res.user.token
-        ..serverType = ServerType.audiobookshelf,
     );
 
     // print(res.toJson());

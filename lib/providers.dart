@@ -9,16 +9,11 @@ import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
-  ServerType serverType = ref.watch(
-    preferencesProvider.select((prefs) => prefs.serverType),
+  String libraryId = ref.watch(
+    preferencesProvider.select((prefs) => prefs.libraryId)
   );
-  Preferences prefs = ref.read(preferencesProvider);
-  if (serverType == ServerType.audiobookshelf) {
-    final absApi = ref.watch(absApiProvider);
-    return AbsRepository(absApi, prefs.libraryId);
-  } else {
-    return null;
-  }
+  final absApi = ref.watch(absApiProvider);
+  return AbsRepository(absApi, libraryId);
 });
 
 final Provider<DownloadService?> downloadServiceProvider =

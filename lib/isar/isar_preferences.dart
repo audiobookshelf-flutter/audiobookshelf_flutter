@@ -47,7 +47,6 @@ class IsarPreferences {
         rewindInterval: prefs.rewindInterval,
         fastForwardInterval: prefs.fastForwardInterval,
         baseUrl: prefs.baseUrl,
-        serverType: prefs.serverType,
         useChapterProgressBar: prefs.useChapterProgressBar,
       );
 
@@ -61,7 +60,6 @@ class IsarPreferences {
         rewindInterval: rewindInterval,
         fastForwardInterval: fastForwardInterval,
         baseUrl: baseUrl,
-        serverType: serverType,
         useChapterProgressBar: useChapterProgressBar,
       );
 }

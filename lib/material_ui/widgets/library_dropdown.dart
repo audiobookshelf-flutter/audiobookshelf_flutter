@@ -17,9 +17,9 @@ class LibraryDropdown extends HookConsumerWidget {
         orElse: () => const Text("Error"),
         loaded: (s) {
           return DropdownButton<Library>(
-            value: s.libraries?.first,
+            value: s.selectedLibrary,
             onChanged: (Library? value) {
-              libraryProvider.setLibrary(value!.id!);
+              libraryProvider.setLibrary(value!);
             },
             items: s.libraries?.map<DropdownMenuItem<Library>>((Library value) {
               return DropdownMenuItem<Library>(
