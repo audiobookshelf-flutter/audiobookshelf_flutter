@@ -18,7 +18,7 @@ class LibrarySelectView extends HookConsumerWidget {
     } else if (state is LibrarySelectStateLoaded) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Select a library'),
+          title: const Text('Select a library'),
           automaticallyImplyLeading: false,
         ),
         body: ListView.builder(

@@ -27,7 +27,7 @@ class BooksNotifier extends StateNotifier<BooksState> {
     try {
       state = const BooksState.loading();
       books = await _repository!.getChildren(
-        _parentId ?? MediaIds.BOOKS_ID,
+        _parentId ?? MediaIds.booksId,
       );
       state = BooksState.loaded(books: books, currentParent: _parentId);
     } on Exception {
@@ -39,7 +39,7 @@ class BooksNotifier extends StateNotifier<BooksState> {
   Future<void> refresh() async {
     try {
       books = await _repository!.getChildren(
-        _parentId ?? MediaIds.BOOKS_ID,
+        _parentId ?? MediaIds.booksId,
       );
       state = BooksState.loaded(
         books: books,

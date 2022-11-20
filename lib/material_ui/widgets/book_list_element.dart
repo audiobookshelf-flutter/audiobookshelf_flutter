@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class BookListElement extends StatelessWidget {
   const BookListElement({
+    super.key,
     this.progress,
     this.subtitle,
     this.title,

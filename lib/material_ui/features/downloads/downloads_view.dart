@@ -16,9 +16,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 
 class Downloads extends HookConsumerWidget {
+  const Downloads({
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final downloadsProvider = ref.watch(downloadsStateProvider.notifier);
@@ -29,11 +33,11 @@ class Downloads extends HookConsumerWidget {
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       showDownloads: false,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const Text('Downloads'),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
           return downloadsProvider.getBooks();
         },
@@ -46,7 +50,7 @@ class Downloads extends HookConsumerWidget {
                 builder: (context, ref, child) {
                   final state = ref.watch(downloadsStateProvider);
                   if (state is DownloadsStateInitial) {
-                    _refresher.currentState!.show();
+                    refresher.currentState!.show();
                   }
                   if (state is DownloadsStateLoaded) {
                     return ResponsiveGridView<MediaItem>(
@@ -55,7 +59,7 @@ class Downloads extends HookConsumerWidget {
                         return BookGridItem(
                           onTap: () async {
                             Navigator.of(context)
-                                .pushNamed(Routes.Book, arguments: book.id);
+                                .pushNamed(Routes.book, arguments: book.id);
                             // playbackController.playFromId(book.id);
                             // navigationService.pushNamed(
                             //   Routes.Player,
@@ -78,7 +82,7 @@ class Downloads extends HookConsumerWidget {
                         children: [
                           Text(state.message!),
                           ElevatedButton(
-                            onPressed: _refresher.currentState!.show,
+                            onPressed: refresher.currentState!.show,
                             child: const Text('Retry'),
                           )
                         ],

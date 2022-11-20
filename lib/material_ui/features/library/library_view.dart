@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookshelf/domain/library_select/library_select_notifier.dart';
 import 'package:audiobookshelf/material_ui/features/book_details/book_details_view.dart';
 import 'package:audiobookshelf/domain/books/books_notifier.dart';
 import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
 import 'package:audiobookshelf/material_ui/widgets/library_dropdown.dart';
 import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
-import 'package:audiobookshelf/models/library.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +21,7 @@ class LibraryView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final booksProvider = ref.watch(booksStateProvider(mediaId).notifier);
@@ -31,11 +29,11 @@ class LibraryView extends HookConsumerWidget {
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const LibraryDropdown(),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
           print('refreshing');
           return booksProvider.refresh();

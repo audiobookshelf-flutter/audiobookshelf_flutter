@@ -11,16 +11,15 @@ import 'package:audiobookshelf/material_ui/widgets/router.dart' as r;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookshelf/models/preferences.dart';
 
 class AbMaterialApp extends HookConsumerWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final routeMap = [
-    Routes.Home,
-    Routes.Library,
-    Routes.Series,
-    Routes.Collections,
-    Routes.Authors,
+    Routes.home,
+    Routes.library,
+    Routes.series,
+    Routes.collections,
+    Routes.authors,
   ];
 
   AbMaterialApp({super.key});
@@ -97,7 +96,7 @@ class AbMaterialApp extends HookConsumerWidget {
                       child: Navigator(
                         key: _navigatorKey,
                         onGenerateRoute: r.Router.generateRoute,
-                        initialRoute: Routes.Home,
+                        initialRoute: Routes.home,
                       ),
                     ),
                     const MiniPlayer(),

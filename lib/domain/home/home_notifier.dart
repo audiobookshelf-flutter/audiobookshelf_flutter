@@ -28,16 +28,16 @@ class HomeNotifier extends StateNotifier<HomeState> {
     List<MediaItem>? recentlyAdded;
 
     try {
-      recentlyPlayed = await _repository!.getChildren(MediaIds.RECENTLY_PLAYED);
+      recentlyPlayed = await _repository!.getChildren(MediaIds.recentlyPlayed);
     } catch (e) {
       print(e);
     }
     try {
-      recentlyAdded = await _repository!.getChildren(MediaIds.RECENTLY_ADDED);
+      recentlyAdded = await _repository!.getChildren(MediaIds.recentlyAdded);
     } catch (e) {
       print(e);
     }
-    final downloaded = await _repository!.getChildren(MediaIds.DOWNLOADS);
+    final downloaded = await _repository!.getChildren(MediaIds.downloads);
     booksSub ??= GetIt.I<DatabaseService>()
         .getBooks()
         .debounceTime(const Duration(milliseconds: 200))
@@ -45,7 +45,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
       if (state is HomeStateLoaded) {
         final stateAsLoaded = (state as HomeStateLoaded);
         state = stateAsLoaded.copyWith(
-            downloaded: await _repository!.getChildren(MediaIds.DOWNLOADS));
+            downloaded: await _repository!.getChildren(MediaIds.downloads));
       }
     });
     state = HomeState.loaded(

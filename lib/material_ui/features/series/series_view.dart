@@ -17,7 +17,7 @@ class SeriesView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final seriesProvider = ref.watch(seriesStateProvider.notifier);
@@ -25,11 +25,11 @@ class SeriesView extends HookConsumerWidget {
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const LibraryDropdown(),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
           print('refreshing');
           return seriesProvider.refresh();
@@ -72,7 +72,7 @@ class SeriesView extends HookConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _refresher.currentState!.show();
+                      refresher.currentState!.show();
                     },
                     child: const Text('Retry'),
                   )

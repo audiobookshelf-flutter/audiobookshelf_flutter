@@ -18,7 +18,7 @@ class AuthorsNotifier extends StateNotifier<AuthorsState> {
 
   Future refresh() async {
     try {
-      final authors = await _repository!.getChildren(MediaIds.AUTHORS_ID);
+      final authors = await _repository!.getChildren(MediaIds.authorsId);
       state = AuthorsState.loaded(authors: authors);
     } on Exception {
       state = const AuthorsState.error(
@@ -29,7 +29,7 @@ class AuthorsNotifier extends StateNotifier<AuthorsState> {
   Future<void> getAuthors() async {
     try {
       state = const AuthorsState.loading();
-      final authors = await _repository!.getChildren(MediaIds.AUTHORS_ID);
+      final authors = await _repository!.getChildren(MediaIds.authorsId);
       state = AuthorsState.loaded(authors: authors);
     } on Exception {
       state = const AuthorsState.error(

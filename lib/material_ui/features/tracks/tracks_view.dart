@@ -84,11 +84,11 @@ class TracksView extends HookConsumerWidget {
                           )
                         : null,
                     title: Text(
-                      '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title.isEmpty ? '' : ' - ' + track.title}',
+                      '${(index + 1).toString().padLeft(totalTrackDigits, '0')}${track.title.isEmpty ? '' : ' - ${track.title}'}',
                       overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
-                        '${Utils.format(Duration(milliseconds: track.duration!.inMilliseconds))}'),
+                        Utils.format(Duration(milliseconds: track.duration!.inMilliseconds))),
                   ),
                 ],
               );

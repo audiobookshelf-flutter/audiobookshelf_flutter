@@ -13,11 +13,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/material_ui/widgets/scaffold_without_footer.dart';
 
 class CollectionsView extends HookConsumerWidget {
-  const CollectionsView();
+  const CollectionsView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final booksProvider = ref.watch(collectionsStateProvider.notifier);
@@ -25,11 +27,11 @@ class CollectionsView extends HookConsumerWidget {
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const LibraryDropdown(),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
           print('refreshing');
           return booksProvider.refresh();

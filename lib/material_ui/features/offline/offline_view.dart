@@ -21,7 +21,7 @@ class Offline extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final offlineProvider = ref.watch(offlineStateProvider.notifier);
@@ -31,11 +31,11 @@ class Offline extends HookConsumerWidget {
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const Text('Library'),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
           print('refreshing');
           return offlineProvider.getBooks();
@@ -49,7 +49,7 @@ class Offline extends HookConsumerWidget {
                 builder: (context, ref, child) {
                   final state = ref.watch(offlineStateProvider);
                   if (state is OfflineStateInitial) {
-                    _refresher.currentState!.show();
+                    refresher.currentState!.show();
                   }
                   if (state is OfflineStateLoaded) {
                     // if (state.currentParent != mediaId)
@@ -60,7 +60,7 @@ class Offline extends HookConsumerWidget {
                         return BookGridItem(
                           onTap: () async {
                             Navigator.of(context)
-                                .pushNamed(Routes.Book, arguments: book.id);
+                                .pushNamed(Routes.book, arguments: book.id);
                             // playbackController.playFromId(book.id);
                             // navigationService.pushNamed(
                             //   Routes.Player,
@@ -85,7 +85,7 @@ class Offline extends HookConsumerWidget {
                             child: Text(state.message!),
                           ),
                           ElevatedButton(
-                            onPressed: _refresher.currentState!.show,
+                            onPressed: refresher.currentState!.show,
                             child: const Text('Retry'),
                           )
                         ],

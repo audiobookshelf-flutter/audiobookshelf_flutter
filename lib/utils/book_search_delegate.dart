@@ -50,9 +50,9 @@ class BookSearchDelegate extends SearchDelegate {
 
     return Consumer(
       builder: (context, ref, child) {
-        final _repo = ref.watch(mediaRepositoryProvider);
+        final repo = ref.watch(mediaRepositoryProvider);
         return FutureBuilder<List<MediaItem>>(
-          future: _repo?.search(query),
+          future: repo?.search(query),
           builder: (context, results) {
             print(results);
             if (!results.hasData) {
@@ -68,7 +68,7 @@ class BookSearchDelegate extends SearchDelegate {
                         onTap: () async {
                           if (item.playable!) {
                             Navigator.of(context).pushNamed(
-                              Routes.Book,
+                              Routes.book,
                               arguments: item.id,
                             );
                           } else {

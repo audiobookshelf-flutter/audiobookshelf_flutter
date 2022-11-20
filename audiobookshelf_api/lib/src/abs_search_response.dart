@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:audiobookshelf_api/audiobookshelf_api.dart';
-import 'package:audiobookshelf_api/src/abs_audiobook_search_result.dart';
-import 'package:audiobookshelf_api/src/abs_series_search_result.dart';
 
 _listEquals(List a, List b) => a.join(',') == b.join(',');
 

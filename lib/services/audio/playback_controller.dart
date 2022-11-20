@@ -34,7 +34,7 @@ Future<AudioHandler> initAudioHandler() async {
 
 abstract class PlaybackController {
   Future playItem(MediaItem item) async {}
-  Future playFromId(String id, [bool play = true]) async {}
+  Future playFromId(String id, [bool shouldPlay = true]) async {}
   Future handleResume() async {}
   Future stop() async {}
   Future fastForward() async {}

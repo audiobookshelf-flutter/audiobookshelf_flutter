@@ -13,11 +13,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/material_ui/widgets/scaffold_without_footer.dart';
 
 class AuthorsView extends HookConsumerWidget {
-  const AuthorsView({Key? key});
+  const AuthorsView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<RefreshIndicatorState> _refresher =
+    final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
     final authorsProvider = ref.watch(authorsStateProvider.notifier);
@@ -26,11 +26,11 @@ class AuthorsView extends HookConsumerWidget {
       refresh:
           !kIsWeb && !Platform.isAndroid && !Platform.isIOS && !Platform.isIOS,
       onRefresh: () {
-        _refresher.currentState!.show();
+        refresher.currentState!.show();
       },
       title: const LibraryDropdown(),
       body: RefreshIndicator(
-        key: _refresher,
+        key: refresher,
         onRefresh: () async {
           print('refreshing');
           return authorsProvider.refresh();
@@ -73,7 +73,7 @@ class AuthorsView extends HookConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _refresher.currentState!.show();
+                      refresher.currentState!.show();
                     },
                     child: const Text('Retry'),
                   )

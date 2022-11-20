@@ -36,7 +36,7 @@ class DesktopDownloader extends Downloader {
             .firstMatch(response.headers.value('content-disposition')!)!
             .group(0)!
             .replaceAll(RegExp(r'"'), '');
-      } catch (e, stack) {
+      } catch (e) {
         fileName ??= track.id;
       }
       final downloadPath = p.join(
