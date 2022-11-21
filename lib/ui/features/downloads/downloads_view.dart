@@ -2,43 +2,44 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
-import 'package:audiobookshelf/domain/offline/offline_notifier.dart';
-import 'package:audiobookshelf/domain/offline/offline_state.dart';
-import 'package:audiobookshelf/material_ui/features/player/mini_player.dart';
+import 'package:audiobookshelf/domain/downloads/downloads_notifier.dart';
+import 'package:audiobookshelf/domain/downloads/downloads_state.dart';
 import 'package:audiobookshelf/services/audio/playback_controller.dart';
 import 'package:audiobookshelf/services/navigation/navigation_service.dart';
-import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
-import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
-import 'package:audiobookshelf/material_ui/widgets/scaffold_without_footer.dart';
+import 'package:audiobookshelf/ui/widgets/book_grid_item.dart';
+import 'package:audiobookshelf/ui/widgets/responsive_grid_view.dart';
+import 'package:audiobookshelf/ui/widgets/scaffold_without_footer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 
-class Offline extends HookConsumerWidget {
-  const Offline({Key? key}) : super(key: key);
+class Downloads extends HookConsumerWidget {
+  const Downloads({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<RefreshIndicatorState> refresher =
         GlobalKey<RefreshIndicatorState>();
 
-    final offlineProvider = ref.watch(offlineStateProvider.notifier);
+    final downloadsProvider = ref.watch(downloadsStateProvider.notifier);
     final playbackController = GetIt.I<PlaybackController>();
     final navigationService = ref.watch(navigationServiceProvider);
 
     return ScaffoldWithoutFooter(
       refresh: !kIsWeb && !Platform.isAndroid && !Platform.isIOS,
+      showDownloads: false,
       onRefresh: () {
         refresher.currentState!.show();
       },
-      title: const Text('Library'),
+      title: const Text('Downloads'),
       body: RefreshIndicator(
         key: refresher,
         onRefresh: () async {
-          print('refreshing');
-          return offlineProvider.getBooks();
+          return downloadsProvider.getBooks();
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,13 +48,11 @@ class Offline extends HookConsumerWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  final state = ref.watch(offlineStateProvider);
-                  if (state is OfflineStateInitial) {
+                  final state = ref.watch(downloadsStateProvider);
+                  if (state is DownloadsStateInitial) {
                     refresher.currentState!.show();
                   }
-                  if (state is OfflineStateLoaded) {
-                    // if (state.currentParent != mediaId)
-                    // _refresher.currentState!.show();
+                  if (state is DownloadsStateLoaded) {
                     return ResponsiveGridView<MediaItem>(
                       items: state.books,
                       itemBuilder: (book) {
@@ -75,15 +74,13 @@ class Offline extends HookConsumerWidget {
                         );
                       },
                     );
-                  } else if (state is OfflineStateErrorDetails) {
+                  } else if (state is DownloadsStateErrorDetails) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Text(state.message!),
-                          ),
+                          Text(state.message!),
                           ElevatedButton(
                             onPressed: refresher.currentState!.show,
                             child: const Text('Retry'),
@@ -96,10 +93,6 @@ class Offline extends HookConsumerWidget {
                   }
                 },
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: MiniPlayer(),
             ),
           ],
         ),

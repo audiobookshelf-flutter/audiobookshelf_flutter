@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:audiobookshelf/domain/home/home_notifier.dart';
-import 'package:audiobookshelf/material_ui/features/home/home_row.dart';
-import 'package:audiobookshelf/material_ui/widgets/library_dropdown.dart';
+import 'package:audiobookshelf/ui/features/home/home_row.dart';
+import 'package:audiobookshelf/ui/widgets/library_dropdown.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookshelf/material_ui/widgets/scaffold_without_footer.dart';
+import 'package:audiobookshelf/ui/widgets/scaffold_without_footer.dart';
 import 'dart:math' as math;
 
 class HomeView extends HookConsumerWidget {

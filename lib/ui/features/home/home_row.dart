@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookshelf/material_ui/features/book_details/book_details_view.dart';
+import 'package:audiobookshelf/ui/features/book_details/book_details_view.dart';
 import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:audiobookshelf/services/audio/playback_controller.dart';
-import 'package:audiobookshelf/material_ui/widgets/cover_item.dart';
+import 'package:audiobookshelf/ui/widgets/cover_item.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:get_it/get_it.dart';

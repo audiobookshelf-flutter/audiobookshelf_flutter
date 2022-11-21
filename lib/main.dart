@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:audiobookshelf/material_ui/material_app.dart';
+import 'package:audiobookshelf/ui/material_app.dart';
 import 'package:audiobookshelf/singletons.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

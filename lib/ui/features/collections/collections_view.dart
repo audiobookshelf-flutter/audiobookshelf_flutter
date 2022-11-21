@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookshelf/material_ui/features/library/library_view.dart';
+import 'package:audiobookshelf/ui/features/library/library_view.dart';
 import 'package:audiobookshelf/domain/collections/collections_notifier.dart';
-import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
-import 'package:audiobookshelf/material_ui/widgets/library_dropdown.dart';
-import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
+import 'package:audiobookshelf/ui/widgets/book_grid_item.dart';
+import 'package:audiobookshelf/ui/widgets/library_dropdown.dart';
+import 'package:audiobookshelf/ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:audiobookshelf/material_ui/widgets/scaffold_without_footer.dart';
+import 'package:audiobookshelf/ui/widgets/scaffold_without_footer.dart';
 
 class CollectionsView extends HookConsumerWidget {
   const CollectionsView({

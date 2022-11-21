@@ -1,8 +1,8 @@
 import 'package:audio_service/audio_service.dart';
-import 'package:audiobookshelf/material_ui/features/library/library_view.dart';
+import 'package:audiobookshelf/ui/features/library/library_view.dart';
 import 'package:audiobookshelf/providers.dart';
-import 'package:audiobookshelf/material_ui/widgets/book_grid_item.dart';
-import 'package:audiobookshelf/material_ui/widgets/responsive_grid_view.dart';
+import 'package:audiobookshelf/ui/widgets/book_grid_item.dart';
+import 'package:audiobookshelf/ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

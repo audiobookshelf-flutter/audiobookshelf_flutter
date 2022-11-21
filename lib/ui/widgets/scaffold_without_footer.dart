@@ -1,6 +1,6 @@
-import 'package:audiobookshelf/material_ui/features/downloads/downloads_view.dart';
+import 'package:audiobookshelf/ui/features/downloads/downloads_view.dart';
 import 'package:audiobookshelf/utils/book_search_delegate.dart';
-import 'package:audiobookshelf/material_ui/features/settings/settings_view.dart';
+import 'package:audiobookshelf/ui/features/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWithoutFooter extends StatelessWidget {

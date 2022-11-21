@@ -1,12 +1,12 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
-import 'package:audiobookshelf/material_ui/features/book_details/book_details_view.dart';
-import 'package:audiobookshelf/material_ui/features/library/library_view.dart';
-import 'package:audiobookshelf/material_ui/features/home/home_view.dart';
-import 'package:audiobookshelf/material_ui/features/authors/authors_view.dart';
-import 'package:audiobookshelf/material_ui/features/player/player_view.dart';
-import 'package:audiobookshelf/material_ui/features/collections/collections_view.dart';
-import 'package:audiobookshelf/material_ui/features/series/series_view.dart';
+import 'package:audiobookshelf/ui/features/book_details/book_details_view.dart';
+import 'package:audiobookshelf/ui/features/library/library_view.dart';
+import 'package:audiobookshelf/ui/features/home/home_view.dart';
+import 'package:audiobookshelf/ui/features/authors/authors_view.dart';
+import 'package:audiobookshelf/ui/features/player/player_view.dart';
+import 'package:audiobookshelf/ui/features/collections/collections_view.dart';
+import 'package:audiobookshelf/ui/features/series/series_view.dart';
 import 'package:flutter/material.dart';
 
 class Router {
