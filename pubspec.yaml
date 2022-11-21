@@ -61,6 +61,7 @@ dependencies:
   adaptive_navigation: ^0.0.7
   scroll_to_index: ^3.0.1
   cupertino_lists: ^1.0.1
+  loggy: ^2.0.3
 
   # dart_chromecast:
   #   git:

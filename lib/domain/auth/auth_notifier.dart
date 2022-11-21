@@ -8,6 +8,7 @@ import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:audiobookshelf/domain/auth/auth_state.dart';
 import 'package:audiobookshelf/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -55,13 +56,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final prefsNotifier = _ref.read(preferencesProvider.notifier);
       Preferences prefs = prefsNotifier.state;
       final navigationService = _ref.read(navigationServiceProvider);
-      print('Checking token: ${prefs.userToken}');
+      logDebug('Checking token: ${prefs.userToken}');
 
       User? user;
       if (prefs.userToken.isNotEmpty) {
         final userRepo = _ref.read(absAuthRepoProvider);
         user = await userRepo.getUser(prefs.userToken);
-        print(user);
+        logDebug(user);
         if (prefs.libraryId.isEmpty) {
           final libraryNotifier = _ref.read(libraryStateProvider.notifier);
           await libraryNotifier.getLibraries();
@@ -79,8 +80,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // if (e.toString().startsWith('Failed host lookup')) {
       //   state = const AuthStateOffline();
       // } else {
-      print(e);
-      print(stack);
+      logError(e, stack);
       state = AuthStateErrorDetails(e.toString());
       // }
     }

@@ -9,6 +9,7 @@ import 'package:audiobookshelf/providers.dart';
 import 'package:audiobookshelf/services/database/database_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 
 final homeStateProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
@@ -29,13 +30,13 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
     try {
       recentlyPlayed = await _repository!.getChildren(MediaIds.recentlyPlayed);
-    } catch (e) {
-      print(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
     try {
       recentlyAdded = await _repository!.getChildren(MediaIds.recentlyAdded);
-    } catch (e) {
-      print(e);
+    } catch (e, stack) {
+      logError(e, stack);
     }
     final downloaded = await _repository!.getChildren(MediaIds.downloads);
     booksSub ??= GetIt.I<DatabaseService>()

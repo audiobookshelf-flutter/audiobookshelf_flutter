@@ -7,6 +7,7 @@ import 'package:audiobookshelf/repositories/media/media_repository.dart';
 import 'package:audiobookshelf/services/download/download_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
 
 final mediaRepositoryProvider = Provider<MediaRepository?>((ref) {
   String libraryId = ref.watch(
@@ -35,7 +36,7 @@ class PreferencesNotifier extends StateNotifier<Preferences> {
       : super(GetIt.I<DatabaseService>().getPreferencesSync()) {
     _db = GetIt.I<DatabaseService>();
     sub = _db.watchPreferences().listen((prefs) {
-      print('Got preferences $prefs');
+      logDebug('Got preferences $prefs');
       if (prefs != null) state = prefs;
     });
   }

@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/utils/utils.dart';
+import 'package:loggy/loggy.dart';
 
 class Offline extends HookConsumerWidget {
   const Offline({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class Offline extends HookConsumerWidget {
       body: RefreshIndicator(
         key: refresher,
         onRefresh: () async {
-          print('refreshing');
+          logDebug('refreshing');
           return offlineProvider.getBooks();
         },
         child: Column(

@@ -12,6 +12,7 @@ import 'package:audiobookshelf/singletons.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:audiobookshelf_api/audiobookshelf_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
 
 final absApiProvider = Provider<AudiobookshelfApi>((ref) {
   String baseUrl =
@@ -459,7 +460,7 @@ class AbsRepository extends MediaRepository {
 
   @override
   Future playbackFinished(String key) async {
-    print('Playback finished');
+    logInfo('Playback finished');
     _sessionId = null;
     _lastCheckinTime = null;
   }
@@ -491,14 +492,14 @@ class AbsRepository extends MediaRepository {
             sdkVersion: '',
           ),
         ));
-    print(DeviceInfo(
+    logDebug(DeviceInfo(
       manufacturer: di.info.manufacturer ?? '',
       brand: '',
       clientVersion: '0.0.1',
       model: di.info.model ?? '',
       sdkVersion: '',
     ).toString());
-    print('LOOKEE HERE: $_sessionId');
+    logDebug('LOOKEE HERE: $_sessionId');
   }
 
   @override
@@ -520,7 +521,7 @@ class AbsRepository extends MediaRepository {
     progress.currentTime = Duration(milliseconds: position);
 
     if (_sessionId != null && _lastCheckinTime != null) {
-      print('We are saving');
+      logDebug('We are saving');
       await _api.playbackSessionCheckin(
           _sessionId!,
           Duration(milliseconds: duration),

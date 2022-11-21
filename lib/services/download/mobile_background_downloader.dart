@@ -7,6 +7,7 @@ import 'package:audiobookshelf/services/database/database_service.dart';
 import 'package:audiobookshelf/services/download/downloader.dart';
 import 'package:background_downloader/background_downloader.dart';
 import 'package:get_it/get_it.dart';
+import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 
 final download = BehaviorSubject();
@@ -29,7 +30,7 @@ class MobileBackgroundDownloader extends Downloader {
   @override
   Future downloadFile(Track track, Uri url, String path,
       [String? fileName]) async {
-    print('Token: ${url.queryParameters['token']}');
+    logDebug('Token: ${url.queryParameters['token']}');
     final task = BackgroundDownloadTask(
       headers: {
         'Authorization': 'Bearer ${url.queryParameters['token'] ?? ''}'
@@ -41,7 +42,7 @@ class MobileBackgroundDownloader extends Downloader {
       progressUpdates:
           DownloadTaskProgressUpdates.statusChangeAndProgressUpdates,
     );
-    print(task);
+    logDebug(task);
 
     await FileDownloader.enqueue(task);
     await db.insertTrack(track.copyWith(downloadTaskId: task.taskId));

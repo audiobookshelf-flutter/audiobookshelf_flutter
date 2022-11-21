@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audiobookshelf/ui/widgets/scaffold_without_footer.dart';
 import 'package:audiobookshelf/utils/utils.dart';
+import 'package:loggy/loggy.dart';
 
 class LibraryView extends HookConsumerWidget {
   final String? mediaId;
@@ -35,7 +36,7 @@ class LibraryView extends HookConsumerWidget {
       body: RefreshIndicator(
         key: refresher,
         onRefresh: () async {
-          print('refreshing');
+          logDebug('refreshing');
           return booksProvider.refresh();
         },
         child: Consumer(

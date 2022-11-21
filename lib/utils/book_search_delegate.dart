@@ -6,6 +6,7 @@ import 'package:audiobookshelf/ui/widgets/responsive_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
 
 class BookSearchDelegate extends SearchDelegate {
   @override
@@ -54,7 +55,7 @@ class BookSearchDelegate extends SearchDelegate {
         return FutureBuilder<List<MediaItem>>(
           future: repo?.search(query),
           builder: (context, results) {
-            print(results);
+            logDebug(results);
             if (!results.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),

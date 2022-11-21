@@ -46,7 +46,7 @@ class LibrarySelectNotifier extends StateNotifier<LibrarySelectState> {
           libs.firstWhereOrNull((element) => element.id == selectedLibraryId);
       if (selectedLibrary == null && libs.isNotEmpty) {
         selectedLibrary = libs.first;
-        await setLibrary(selectedLibrary!);
+        await setLibrary(selectedLibrary);
       }
       state = LibrarySelectState.loaded(libraries: libs, selectedLibrary: selectedLibrary);
     } on Exception {

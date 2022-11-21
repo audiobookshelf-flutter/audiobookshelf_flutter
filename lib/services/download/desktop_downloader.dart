@@ -6,6 +6,7 @@ import 'package:audiobookshelf/models/track.dart';
 import 'package:audiobookshelf/services/database/database_service.dart';
 import 'package:audiobookshelf/services/download/downloader.dart';
 import 'package:audiobookshelf/utils/utils.dart';
+import 'package:loggy/loggy.dart';
 import 'package:path/path.dart' as p;
 
 class DesktopDownloader extends Downloader {
@@ -20,7 +21,7 @@ class DesktopDownloader extends Downloader {
   ]) async {
     late StreamSubscription sub;
     Completer completer = Completer();
-    print(url);
+    logDebug(url);
     try {
       HttpClient client = HttpClient();
       HttpClientRequest request = await client.getUrl(url);
@@ -77,8 +78,7 @@ class DesktopDownloader extends Downloader {
       });
     } catch (e, stack) {
       completer.completeError(e, stack);
-      print(e.toString());
-      print(stack.toString());
+      logError(e, stack);
     }
     return completer.future;
   }
@@ -95,7 +95,7 @@ class DesktopDownloader extends Downloader {
         .where((tracks) => tracks.every((track) => track.isDownloaded))
         .listen((tracks) async {
       trackSub?.cancel();
-      print('ALL DONE');
+      logDebug('ALL DONE');
 
       final book = await db.getBookById(parentId);
       if (book != null) {

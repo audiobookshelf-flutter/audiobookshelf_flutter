@@ -2,6 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audiobookshelf/constants/app_constants.dart';
 import 'package:audiobookshelf/models/library.dart';
 import 'package:audiobookshelf/models/user.dart';
+import 'package:loggy/loggy.dart';
 
 enum AudiobookshelfPlaybackState {
   playing,
@@ -25,7 +26,7 @@ abstract class MediaRepository {
 
   Future<List<MediaItem>> getChildren(String parentMediaId) async {
     var pieces = parentMediaId.split('/');
-    print('Parent media id! $parentMediaId');
+    logDebug('Parent media id! $parentMediaId');
     switch (pieces[0]) {
       case AudioService.browsableRootId:
         var items = <MediaItem>[

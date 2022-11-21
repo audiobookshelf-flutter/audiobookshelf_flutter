@@ -11,6 +11,7 @@ import 'package:audiobookshelf/providers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:path/path.dart' as p;
 
@@ -310,9 +311,8 @@ class AudiobookshelfAudioHandler extends BaseAudioHandler {
       if (position > currentPosition) {
         await seek(position);
       }
-    } catch (e) {
-      print(e);
-      log(e.toString());
+    } catch (e, stack) {
+      logError(e, stack);
     }
 
     _player.play();

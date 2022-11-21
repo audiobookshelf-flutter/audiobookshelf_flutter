@@ -13,6 +13,7 @@ import 'package:audiobookshelf/models/track.dart';
 import 'package:audiobookshelf/services/database/database_service.dart';
 import 'package:isar/isar.dart';
 import 'package:audiobookshelf/utils/utils.dart';
+import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -219,7 +220,7 @@ class IsarDatabaseService implements DatabaseService {
 
   @override
   Future insertPreferences(Preferences prefs) {
-    print('Writing preferences for some reason');
+    logDebug('Writing preferences for some reason');
     return _db.writeTxn(() async {
       await _db.isarPreferences.put(IsarPreferences.fromPreferences(prefs));
     });
@@ -228,7 +229,7 @@ class IsarDatabaseService implements DatabaseService {
   @override
   Preferences getPreferencesSync() {
     if (_db.isarPreferences.countSync() < 1) {
-      print('here there be dragons');
+      logWarning('here there be dragons');
       _db.writeTxnSync(() => _db.isarPreferences.putSync(IsarPreferences()));
     }
     return _db.isarPreferences.getSync(0)!.toPreferences();
