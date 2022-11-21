@@ -82,9 +82,7 @@ class Offline extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Text(state.message!),
-                          ),
+                          Text(state.message!),
                           ElevatedButton(
                             onPressed: refresher.currentState!.show,
                             child: const Text('Retry'),
