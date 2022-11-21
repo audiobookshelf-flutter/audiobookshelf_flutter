@@ -191,9 +191,9 @@ class BookDetailsView extends HookConsumerWidget {
                             ),
                           ),
                           FloatingActionButton(
-                            foregroundColor: Colors.white,
+                            foregroundColor: Colors.black,
                             backgroundColor:
-                                Theme.of(context).colorScheme.primary,
+                            Colors.white,
                             onPressed: () {
                               playbackController.playFromId(item.id);
                               // navigationService.pushNamed(

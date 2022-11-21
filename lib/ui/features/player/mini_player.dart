@@ -41,7 +41,7 @@ class MiniPlayer extends HookConsumerWidget {
           // ),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.circular(5),
             ),
             child: InkWell(
@@ -108,17 +108,15 @@ class MiniPlayer extends HookConsumerWidget {
                           color: Colors.white,
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                         ),
-                        IconButton(
-                          color: Colors.white,
-                          icon: state.playing
-                              ? const Icon(Icons.pause)
-                              : const Icon(Icons.play_arrow),
-                          iconSize: 25,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          autofocus: false,
+                        FloatingActionButton.small(
+                          heroTag: 'play_button',
+                          backgroundColor: Colors.green,
                           onPressed: state.playing
                               ? playbackController.pause
                               : playbackController.play,
+                          child: state.playing
+                              ? const Icon(Icons.pause)
+                              : const Icon(Icons.play_arrow),
                         ),
                         IconButton(
                           color: Colors.white,

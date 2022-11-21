@@ -289,7 +289,7 @@ class PlayerView extends HookConsumerWidget {
                                                     AudioProcessingState.buffering
                                         ? playbackController.pause
                                         : playbackController.play,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Colors.green,
                                     size: 60,
                                   ),
                                 ],
