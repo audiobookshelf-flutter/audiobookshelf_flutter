@@ -30,7 +30,7 @@ class AbsRepository extends MediaRepository {
   Map<String, AbsAudiobook> audiobooks = {};
   final AudiobookshelfApi _api;
 
-  String _libraryId;
+  final String _libraryId;
   final DatabaseService _db = getIt();
 
   AbsRepository(this._api, this._libraryId) : super(true);

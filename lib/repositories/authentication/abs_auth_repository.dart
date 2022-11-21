@@ -29,10 +29,11 @@ class AbsAuthRepository extends AuthenticationRepository {
 
   @override
   Future<bool> logout() async {
-    final prefs = _ref.read(preferencesProvider.notifier);
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefsProvider = _ref.read(preferencesProvider);
 
-    prefs.savePreferences(
-      prefs.state
+    prefsNotifier.savePreferences(
+      prefsProvider
         ..baseUrl = ''
         ..userToken = ''
         ..userId = ''
@@ -44,13 +45,14 @@ class AbsAuthRepository extends AuthenticationRepository {
   }
 
   Future<User> login(String baseUrl, String username, String password) async {
-    final prefs = _ref.read(preferencesProvider.notifier);
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefsProvider = _ref.read(preferencesProvider);
     final absApi = _ref.read(absApiProvider);
     absApi.baseUrl = baseUrl;
     final res = await absApi.login(username, password);
 
-    prefs.savePreferences(
-      prefs.state
+    prefsNotifier.savePreferences(
+        prefsProvider
         ..username = res.user.username
         ..userId = res.user.id
         ..baseUrl = baseUrl
