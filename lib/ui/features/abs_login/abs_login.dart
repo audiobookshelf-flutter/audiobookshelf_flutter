@@ -103,23 +103,25 @@ class AbsLogin extends HookConsumerWidget {
                                 ),
                         ),
                         onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            loading.value = true;
-                            if (!await auth.absLogin(
-                              login.value.baseUrl,
-                              login.value.username,
-                              login.value.password,
-                            )) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Username or password invalid')));
-                            } else {
-                              await auth.checkToken();
-                              navigationService.pop();
-                            }
-                            loading.value = false;
+                          if (!formKey.currentState!.validate()) {
+                            return;
                           }
+                          loading.value = true;
+                          var success = await auth.absLogin(
+                            login.value.baseUrl,
+                            login.value.username,
+                            login.value.password,
+                          );
+                          loading.value = false;
+                          if (!success) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Username or password invalid')));
+                            return;
+                          }
+                          await auth.checkToken();
+                          navigationService.pop();
                         },
                       ),
                     ],
