@@ -13,8 +13,7 @@ final Provider<DatabaseService> databaseServiceProvider =
 abstract class DatabaseService {
   DatabaseService();
 
-  Stream<Preferences?> watchPreferences();
-  Preferences getPreferencesSync();
+  Preferences getPreferences();
   Future insertPreferences(Preferences prefs);
 
   Stream<List<Book>> getBooks();

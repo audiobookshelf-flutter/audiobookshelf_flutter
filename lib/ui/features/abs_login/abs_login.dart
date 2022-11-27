@@ -1,3 +1,4 @@
+import 'package:audiobookshelf/domain/auth/auth_state.dart';
 import 'package:audiobookshelf/services/navigation/navigation_service.dart';
 import 'package:audiobookshelf/domain/auth/auth_notifier.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class AbsLogin extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
-    final loading = useState(false);
     final login = useState(LoginState());
     final auth = ref.watch(authNotifierProvider.notifier);
     final navigationService = ref.watch(navigationServiceProvider);
@@ -92,7 +92,7 @@ class AbsLogin extends HookConsumerWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: loading.value
+                          child: auth is AuthStateLoading
                               ? const CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                       Colors.white),
@@ -106,21 +106,20 @@ class AbsLogin extends HookConsumerWidget {
                           if (!formKey.currentState!.validate()) {
                             return;
                           }
-                          loading.value = true;
-                          var success = await auth.absLogin(
+                          final scaffoldMessenger = ScaffoldMessenger.of(context);
+                          var success = await auth.login(
                             login.value.baseUrl,
                             login.value.username,
                             login.value.password,
                           );
-                          loading.value = false;
                           if (!success) {
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            scaffoldMessenger.showSnackBar(
                                 const SnackBar(
                                     content:
-                                        Text('Username or password invalid')));
+                                    Text('Server Url, Username, or password invalid')));
                             return;
                           }
-                          await auth.checkToken();
+                          await auth.checkAuthState();
                           navigationService.pop();
                         },
                       ),

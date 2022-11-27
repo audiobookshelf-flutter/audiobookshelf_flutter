@@ -18,9 +18,6 @@ class IsarPreferences {
   String baseUrl;
   bool useChapterProgressBar;
 
-  @enumerated
-  ServerType serverType;
-
   IsarPreferences({
     this.id = 0,
     this.userToken = '',
@@ -32,7 +29,6 @@ class IsarPreferences {
     this.rewindInterval = 15,
     this.fastForwardInterval = 30,
     this.baseUrl = '',
-    this.serverType = ServerType.unknown,
     this.useChapterProgressBar = false,
   });
 

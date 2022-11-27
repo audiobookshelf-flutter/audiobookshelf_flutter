@@ -15,6 +15,7 @@ import 'package:isar/isar.dart';
 import 'package:audiobookshelf/utils/utils.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
 Future<Isar> initIsar() async {
@@ -219,26 +220,18 @@ class IsarDatabaseService implements DatabaseService {
   }
 
   @override
-  Future insertPreferences(Preferences prefs) {
-    logDebug('Writing preferences for some reason');
-    return _db.writeTxn(() async {
+  Future insertPreferences(Preferences prefs) async {
+    await _db.writeTxn(() async {
       await _db.isarPreferences.put(IsarPreferences.fromPreferences(prefs));
     });
   }
 
   @override
-  Preferences getPreferencesSync() {
+  Preferences getPreferences() {
     if (_db.isarPreferences.countSync() < 1) {
-      logWarning('here there be dragons');
+      logWarning('initializing preferences');
       _db.writeTxnSync(() => _db.isarPreferences.putSync(IsarPreferences()));
     }
     return _db.isarPreferences.getSync(0)!.toPreferences();
-  }
-
-  @override
-  Stream<Preferences?> watchPreferences() {
-    return _db.isarPreferences
-        .watchObject(0)
-        .map((prefs) => prefs?.toPreferences());
   }
 }

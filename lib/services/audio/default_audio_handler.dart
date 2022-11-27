@@ -215,7 +215,7 @@ class AudiobookshelfAudioHandler extends BaseAudioHandler {
 
   Future<void> setPlaybackRate(double speed) async {
     DatabaseService db = GetIt.I();
-    await db.insertPreferences(db.getPreferencesSync()..playbackSpeed = speed);
+    await db.insertPreferences(db.getPreferences().copyWith(playbackSpeed: speed));
     await _player.setSpeed(speed);
   }
 
@@ -524,7 +524,7 @@ class AudiobookshelfAudioHandler extends BaseAudioHandler {
           .catchError((err) {
         log(err);
       });
-      await setSpeed(db.getPreferencesSync().playbackSpeed);
+      await setSpeed(db.getPreferences().playbackSpeed);
 
       setCurrentMediaItem();
     } catch (e, stack) {

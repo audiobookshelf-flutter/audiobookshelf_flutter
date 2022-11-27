@@ -153,7 +153,7 @@ class AbMaterialApp extends HookConsumerWidget {
                   ElevatedButton(
                     child: const Text('Offline Mode'),
                     onPressed: () {
-                      ref.read(authNotifierProvider.notifier).checkToken();
+                      ref.read(authNotifierProvider.notifier).checkAuthState();
                       ref.read(navigationServiceProvider).push(
                           MaterialPageRoute(
                               builder: (context) => const Offline()));
@@ -162,7 +162,7 @@ class AbMaterialApp extends HookConsumerWidget {
                   ElevatedButton(
                     child: const Text('Retry?'),
                     onPressed: () {
-                      ref.read(authNotifierProvider.notifier).checkToken();
+                      ref.read(authNotifierProvider.notifier).checkAuthState();
                     },
                   )
                 ],

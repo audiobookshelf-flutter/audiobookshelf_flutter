@@ -1,5 +1,5 @@
+import 'package:audiobookshelf/providers.dart';
 import 'package:audiobookshelf/services/audio/playback_controller.dart';
-import 'package:audiobookshelf/services/database/database_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -26,12 +26,11 @@ class RewindButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playbackController = GetIt.I<PlaybackController>();
-    final databaseService = ref.watch(databaseServiceProvider);
+    final prefs = ref.watch(preferencesProvider);
 
     return IconButton(
       color: color,
-      icon: Icon(iconMap[
-          databaseService.getPreferencesSync().rewindInterval.toString()]),
+      icon: Icon(iconMap[prefs.rewindInterval.toString()]),
       iconSize: iconSize,
       padding: padding,
       autofocus: false,

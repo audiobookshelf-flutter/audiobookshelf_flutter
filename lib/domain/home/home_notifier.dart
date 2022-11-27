@@ -25,6 +25,9 @@ class HomeNotifier extends StateNotifier<HomeState> {
   }
 
   Future refresh() async {
+    if (_repository == null) {
+      return;
+    }
     List<MediaItem>? recentlyPlayed;
     List<MediaItem>? recentlyAdded;
 

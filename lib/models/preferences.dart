@@ -1,32 +1,19 @@
-enum ServerType { audiobookshelf, unknown }
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Preferences {
-  String userToken;
-  String userId;
-  String username;
-  String libraryId;
-  String serverId;
-  double playbackSpeed;
-  double rewindInterval;
-  double fastForwardInterval;
-  String baseUrl;
-  bool useChapterProgressBar;
+part 'preferences.freezed.dart';
 
-  Preferences({
-    this.userToken = '',
-    this.userId = '',
-    this.username = '',
-    this.libraryId = '',
-    this.serverId = '',
-    this.playbackSpeed = 1,
-    this.rewindInterval = 15,
-    this.fastForwardInterval = 30,
-    this.baseUrl = '',
-    this.useChapterProgressBar = false,
-  });
-
-  @override
-  String toString() {
-    return 'Preferences($userToken, $userId, $playbackSpeed)';
-  }
+@freezed
+class Preferences with _$Preferences {
+  const factory Preferences({
+    required String userToken,
+    required String userId,
+    required String username,
+    required String libraryId,
+    required String serverId,
+    required double playbackSpeed,
+    required double rewindInterval,
+    required double fastForwardInterval,
+    required String baseUrl,
+    required bool useChapterProgressBar,
+  }) = _Preferences;
 }

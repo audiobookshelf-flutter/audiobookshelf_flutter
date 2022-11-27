@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:audiobookshelf/domain/library_select/library_select_notifier.dart';
-import 'package:audiobookshelf/models/preferences.dart';
 import 'package:audiobookshelf/models/user.dart';
-import 'package:audiobookshelf/repositories/authentication/abs_auth_repository.dart';
-import 'package:audiobookshelf/services/navigation/navigation_service.dart';
-import 'package:audiobookshelf/domain/auth/auth_state.dart';
 import 'package:audiobookshelf/providers.dart';
+import 'package:audiobookshelf/repositories/authentication/abs_auth_repository.dart';
+import 'package:audiobookshelf/domain/auth/auth_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
 
@@ -19,20 +17,23 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final Ref _ref;
 
   AuthNotifier(this._ref) : super(const AuthStateInitial()) {
-    checkToken();
+    checkAuthState();
   }
 
   Future<bool> logout() async {
+    final repo = _ref.read(absAuthRepoProvider);
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
     try {
       state = const AuthStateLoading();
-      final prefsNotifier = _ref.read(preferencesProvider.notifier);
-      Preferences prefs = prefsNotifier.state;
-      prefs.userToken = '';
-      prefs.baseUrl = '';
-      prefs.serverId = '';
-      prefs.userId = '';
-      prefs.libraryId = '';
-      prefsNotifier.savePreferences(prefs);
+      await repo.logout();
+      await prefsNotifier.save(prefs.copyWith(
+        baseUrl: '',
+        userToken: '',
+        userId: '',
+        serverId: '',
+        libraryId: '',
+      ));
       state = const AuthStateInitial();
       return true;
     } catch (e) {
@@ -40,42 +41,77 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  Future<bool> absLogin(
+  Future<bool> login(
     String baseUrl,
     String username,
     String password,
   ) async {
-    User u =
-        await _ref.read(absAuthRepoProvider).login(baseUrl, username, password);
-    return u.token != null;
+    state = const AuthStateLoading();
+    final prefsNotifier = _ref.read(preferencesProvider.notifier);
+    final prefs = _ref.read(preferencesProvider);
+    await prefsNotifier.save(
+      prefs.copyWith(
+        baseUrl: baseUrl,
+      ),
+    );
+    try {
+      User u = await _ref.read(absAuthRepoProvider).login(username, password);
+      final prefsNotifier = _ref.read(preferencesProvider.notifier);
+      final prefs = _ref.read(preferencesProvider);
+      await prefsNotifier.save(
+        prefs.copyWith(
+          userId: u.id ?? '',
+          username: u.name ?? '',
+          userToken: u.token ?? '',
+        ),
+      );
+      await checkAuthState();
+      return u.token != null;
+    } catch (e, stack) {
+      logError(e, stack);
+      state = const AuthStateInitial();
+      return false;
+    }
   }
 
-  Future checkToken() async {
+  Future checkAuthState() async {
     try {
       state = const AuthStateLoading();
       final prefsNotifier = _ref.read(preferencesProvider.notifier);
-      Preferences prefs = prefsNotifier.state;
-      final navigationService = _ref.read(navigationServiceProvider);
+      final prefs = _ref.read(preferencesProvider);
+
+      if (prefs.baseUrl.isEmpty) {
+        state = const AuthStateInitial();
+        return;
+      }
+
+      if (prefs.userToken.isEmpty) {
+        state = const AuthStateInitial();
+        return;
+      }
+
       logDebug('Checking token: ${prefs.userToken}');
 
       User? user;
-      if (prefs.userToken.isNotEmpty) {
-        final userRepo = _ref.read(absAuthRepoProvider);
-        user = await userRepo.getUser(prefs.userToken);
-        logDebug(user);
-        if (prefs.libraryId.isEmpty) {
-          final libraryNotifier = _ref.read(libraryStateProvider.notifier);
-          await libraryNotifier.getLibraries();
-        }
+      final userRepo = _ref.read(absAuthRepoProvider);
+      user = await userRepo.getUser();
+
+      if (user == null) {
+        await prefsNotifier.save(
+          prefs.copyWith(
+            userToken: '',
+          ),
+        );
+        state = const AuthStateInitial();
+        return;
       }
 
-      if (user != null) {
-        state = AuthStateLoaded(user: user);
-      } else {
-        prefs.userToken = '';
-        prefsNotifier.savePreferences(prefs);
-        state = const AuthStateInitial();
+      if (prefs.libraryId.isEmpty) {
+        final libraryNotifier = _ref.read(libraryStateProvider.notifier);
+        await libraryNotifier.getLibraries();
       }
+
+      state = AuthStateLoaded(user: user);
     } catch (e, stack) {
       // if (e.toString().startsWith('Failed host lookup')) {
       //   state = const AuthStateOffline();

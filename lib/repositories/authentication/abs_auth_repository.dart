@@ -1,66 +1,38 @@
 import 'package:audiobookshelf/models/user.dart';
 import 'package:audiobookshelf/repositories/media/abs_repository.dart';
 import 'package:audiobookshelf/repositories/authentication/authentication_repository.dart';
-import 'package:audiobookshelf/providers.dart';
+import 'package:audiobookshelf_api/audiobookshelf_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final absAuthRepoProvider = Provider<AbsAuthRepository>((ref) {
-  return AbsAuthRepository(ref);
+  final api = ref.watch(absApiProvider);
+  return AbsAuthRepository(api);
 });
 
 class AbsAuthRepository extends AuthenticationRepository {
-  final Ref _ref;
-  AbsAuthRepository(this._ref);
+  final AudiobookshelfApi _api;
+
+  AbsAuthRepository(this._api);
 
   @override
-  Future<User?> getUser(String token) async {
-    final absApi = _ref.read(absApiProvider);
-    final prefs = _ref.read(preferencesProvider);
-    absApi.token = token;
-    absApi.userId = prefs.userId;
-    final user = await absApi.getUser();
-
+  Future<User?> getUser() async {
+    final user = await _api.getUser();
     return User(
       name: user.username,
       userName: user.username,
-      token: token,
+      token: user.token,
     );
   }
 
   @override
   Future<bool> logout() async {
-    final prefsNotifier = _ref.read(preferencesProvider.notifier);
-    final prefsProvider = _ref.read(preferencesProvider);
-
-    prefsNotifier.savePreferences(
-      prefsProvider
-        ..baseUrl = ''
-        ..userToken = ''
-        ..userId = ''
-        ..serverId = ''
-        ..libraryId = ''
-    );
-
     return true;
   }
 
-  Future<User> login(String baseUrl, String username, String password) async {
-    final prefsNotifier = _ref.read(preferencesProvider.notifier);
-    final prefsProvider = _ref.read(preferencesProvider);
-    final absApi = _ref.read(absApiProvider);
-    absApi.baseUrl = baseUrl;
-    final res = await absApi.login(username, password);
-
-    prefsNotifier.savePreferences(
-        prefsProvider
-        ..username = res.user.username
-        ..userId = res.user.id
-        ..baseUrl = baseUrl
-        ..userToken = res.user.token
-    );
-
-    // print(res.toJson());
+  Future<User> login(String username, String password) async {
+    final res = await _api.login(username, password);
     return User(
+      id: res.user.id,
       name: res.user.username,
       userName: res.user.username,
       token: res.user.token,

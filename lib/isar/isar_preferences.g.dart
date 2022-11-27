@@ -47,29 +47,23 @@ const IsarPreferencesSchema = CollectionSchema(
       name: r'serverId',
       type: IsarType.string,
     ),
-    r'serverType': PropertySchema(
-      id: 6,
-      name: r'serverType',
-      type: IsarType.byte,
-      enumMap: _IsarPreferencesserverTypeEnumValueMap,
-    ),
     r'useChapterProgressBar': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'useChapterProgressBar',
       type: IsarType.bool,
     ),
     r'userId': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'userId',
       type: IsarType.string,
     ),
     r'userToken': PropertySchema(
-      id: 9,
+      id: 8,
       name: r'userToken',
       type: IsarType.string,
     ),
     r'username': PropertySchema(
-      id: 10,
+      id: 9,
       name: r'username',
       type: IsarType.string,
     )
@@ -115,11 +109,10 @@ void _isarPreferencesSerialize(
   writer.writeDouble(offsets[3], object.playbackSpeed);
   writer.writeDouble(offsets[4], object.rewindInterval);
   writer.writeString(offsets[5], object.serverId);
-  writer.writeByte(offsets[6], object.serverType.index);
-  writer.writeBool(offsets[7], object.useChapterProgressBar);
-  writer.writeString(offsets[8], object.userId);
-  writer.writeString(offsets[9], object.userToken);
-  writer.writeString(offsets[10], object.username);
+  writer.writeBool(offsets[6], object.useChapterProgressBar);
+  writer.writeString(offsets[7], object.userId);
+  writer.writeString(offsets[8], object.userToken);
+  writer.writeString(offsets[9], object.username);
 }
 
 IsarPreferences _isarPreferencesDeserialize(
@@ -136,13 +129,10 @@ IsarPreferences _isarPreferencesDeserialize(
     playbackSpeed: reader.readDoubleOrNull(offsets[3]) ?? 1,
     rewindInterval: reader.readDoubleOrNull(offsets[4]) ?? 15,
     serverId: reader.readStringOrNull(offsets[5]) ?? '',
-    serverType: _IsarPreferencesserverTypeValueEnumMap[
-            reader.readByteOrNull(offsets[6])] ??
-        ServerType.unknown,
-    useChapterProgressBar: reader.readBoolOrNull(offsets[7]) ?? false,
-    userId: reader.readStringOrNull(offsets[8]) ?? '',
-    userToken: reader.readStringOrNull(offsets[9]) ?? '',
-    username: reader.readStringOrNull(offsets[10]) ?? '',
+    useChapterProgressBar: reader.readBoolOrNull(offsets[6]) ?? false,
+    userId: reader.readStringOrNull(offsets[7]) ?? '',
+    userToken: reader.readStringOrNull(offsets[8]) ?? '',
+    username: reader.readStringOrNull(offsets[9]) ?? '',
   );
   return object;
 }
@@ -167,30 +157,17 @@ P _isarPreferencesDeserializeProp<P>(
     case 5:
       return (reader.readStringOrNull(offset) ?? '') as P;
     case 6:
-      return (_IsarPreferencesserverTypeValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          ServerType.unknown) as P;
-    case 7:
       return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 7:
+      return (reader.readStringOrNull(offset) ?? '') as P;
     case 8:
       return (reader.readStringOrNull(offset) ?? '') as P;
     case 9:
-      return (reader.readStringOrNull(offset) ?? '') as P;
-    case 10:
       return (reader.readStringOrNull(offset) ?? '') as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
-
-const _IsarPreferencesserverTypeEnumValueMap = {
-  'audiobookshelf': 0,
-  'unknown': 1,
-};
-const _IsarPreferencesserverTypeValueEnumMap = {
-  0: ServerType.audiobookshelf,
-  1: ServerType.unknown,
-};
 
 Id _isarPreferencesGetId(IsarPreferences object) {
   return object.id;
@@ -950,62 +927,6 @@ extension IsarPreferencesQueryFilter
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
-      serverTypeEqualTo(ServerType value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'serverType',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
-      serverTypeGreaterThan(
-    ServerType value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'serverType',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
-      serverTypeLessThan(
-    ServerType value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'serverType',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
-      serverTypeBetween(
-    ServerType lower,
-    ServerType upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'serverType',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterFilterCondition>
       useChapterProgressBarEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1516,20 +1437,6 @@ extension IsarPreferencesQuerySortBy
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
-      sortByServerType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'serverType', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
-      sortByServerTypeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'serverType', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
       sortByUseChapterProgressBar() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'useChapterProgressBar', Sort.asc);
@@ -1683,20 +1590,6 @@ extension IsarPreferencesQuerySortThenBy
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
-      thenByServerType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'serverType', Sort.asc);
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
-      thenByServerTypeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'serverType', Sort.desc);
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QAfterSortBy>
       thenByUseChapterProgressBar() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'useChapterProgressBar', Sort.asc);
@@ -1797,13 +1690,6 @@ extension IsarPreferencesQueryWhereDistinct
   }
 
   QueryBuilder<IsarPreferences, IsarPreferences, QDistinct>
-      distinctByServerType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'serverType');
-    });
-  }
-
-  QueryBuilder<IsarPreferences, IsarPreferences, QDistinct>
       distinctByUseChapterProgressBar() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'useChapterProgressBar');
@@ -1876,13 +1762,6 @@ extension IsarPreferencesQueryProperty
   QueryBuilder<IsarPreferences, String, QQueryOperations> serverIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'serverId');
-    });
-  }
-
-  QueryBuilder<IsarPreferences, ServerType, QQueryOperations>
-      serverTypeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'serverType');
     });
   }
 

@@ -3,5 +3,6 @@ class User {
   String? name;
   String? thumb;
   String? token;
-  User({this.userName, this.name, this.thumb, this.token});
+  String? id;
+  User({this.userName, this.name, this.thumb, this.token, this.id});
 }
